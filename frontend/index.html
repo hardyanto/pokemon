@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+</head>
+<body onload="loadPokemon()">
+<!-- <body> -->
+    <!-- <div id='app'>
+            <table border="1">
+                <th>Legend</th>
+                <tr v-for="(item, index) in pets">
+                    {{ item }}
+                </tr>
+            </table>
+    </div> -->
+    
+    <table border="1" id="my-table">
+        <tr>
+            <th>Names</th>
+        </tr>
+    </table>
+    <script>
+        function loadPokemon() {
+            var request = new XMLHttpRequest();
+            request.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    var data = JSON.parse(this.responseText);
+                    console.log(data);
+                    
+                    let output = ""
+                    for (d of data) {
+                        if (d.Legendary) {
+                            output += `<tr col="3">${d.Name}</tr>`;
+                        }
+                        
+                    }
+
+                    document.getElementById("my-table").innerHTML += output;
+                    
+                }
+            }
+
+            request.open("GET", "http://localhost:3000/pokemons/", true);
+            request.send();
+        }
+        // new Vue({
+        //     el: "#app",
+        //     data: {
+        //         pets: []
+        //     },
+        //     methods: {
+        //         getPets: function() {
+        //             axios.get('http://localhost:3000/pokemons/')
+        //             .then(response => {
+        //                 let value = response.data;
+        //                 this.pets = value;
+        //                 console.log(this.pets);
+        //             })
+        //             .catch(error => {
+        //                 console.log("Error")
+        //             })
+        //             return this.pets;
+        //         }
+        //     }
+        //     // mounted: function() {
+        //     //     axios.get('http://localhost:3000/pokemons/')
+        //     //     .then(response => {
+        //     //         let value = response.data;
+        //     //         pets = value;
+        //     //         console.log(pets);
+        //     //     })
+        //     //     .catch(error => {
+        //     //         console.log("Error")
+        //     //     })
+        //     // }
+        // });
+    </script>
+</body>
+</html>
